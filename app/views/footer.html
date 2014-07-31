@@ -1,0 +1,16 @@
+    </div>
+
+    <script type="text/javascript" charset="utf-8" src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    {{range .moreScripts}}
+        <script type="text/javascript" charset="utf-8" src="/public/{{.}}"></script>
+    {{end}}
+    <script type="text/javascript" charset="utf-8" src="https://plus.google.com/js/client:plusone.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/public/js/Chart.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/public/js/googleplus.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/public/js/grassfed.js"></script>
+  
+    {{if eq .RunMode "dev"}}
+        {{template "debug.html" .}}
+    {{end}}
+</body>
+</html>

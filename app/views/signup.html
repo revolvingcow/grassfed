@@ -1,0 +1,42 @@
+<div id="signup" class="jumbotron" style="display: none;">
+    <h1>Let's get you started...</h1>
+
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <img src="/public/img/signup.png" />
+        </div>
+    </div>
+
+    <form action="/goal" method="post" role="form" class="form-horizontal">
+        <input name="id" type="hidden" value="" />
+
+        <div class="row">
+            <div class="col-md-4 text-center">
+                <h3>Step 1: Sign In</h3>
+
+                <p>
+                    Done and done ;) 
+                </p>
+            </div>
+            <div class="col-md-4 text-center">
+                <h3>Step 2: Set A Goal</h3>
+            
+                <p>
+                    <div class="form-group col-md-12">
+                        <input name="calories" type="range" min="1000" max="3000" step="100" value="" class="form-control" />
+                        <p style="padding-top: 0.35em;"><label for="calories">Daily:</label>&nbsp;<span class="goal">2000</span></p>
+                    </div>
+                </p>
+            </div>
+            <div class="col-md-4 text-center">
+                <h3>Step 3: Have Fun!</h3>
+
+                <p>
+                    <div class="col-md-offset-2 col-md-8">
+                        <input name="set" type="submit" value="Get Started" class="form-control btn btn-primary" />
+                    </div>
+                </p>
+            </div>
+        </div>
+    </form>
+</div>
