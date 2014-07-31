@@ -5,12 +5,12 @@ import (
 	"flag"
 	"reflect"
 	"github.com/revel/revel"
-	controllers0 "github.com/revel/revel/modules/static/app/controllers"
+	_ "github.com/grassfed/app"
+	controllers "github.com/grassfed/app/controllers"
+	tests "github.com/grassfed/tests"
+	controllers1 "github.com/revel/revel/modules/static/app/controllers"
 	_ "github.com/revel/revel/modules/testrunner/app"
-	controllers1 "github.com/revel/revel/modules/testrunner/app/controllers"
-	_ "grassfed/app"
-	controllers "grassfed/app/controllers"
-	tests "grassfed/tests"
+	controllers0 "github.com/revel/revel/modules/testrunner/app/controllers"
 )
 
 var (
@@ -108,31 +108,7 @@ func main() {
 			
 		})
 	
-	revel.RegisterController((*controllers0.Static)(nil),
-		[]*revel.MethodType{
-			&revel.MethodType{
-				Name: "Serve",
-				Args: []*revel.MethodArg{ 
-					&revel.MethodArg{Name: "prefix", Type: reflect.TypeOf((*string)(nil)) },
-					&revel.MethodArg{Name: "filepath", Type: reflect.TypeOf((*string)(nil)) },
-				},
-				RenderArgNames: map[int][]string{ 
-				},
-			},
-			&revel.MethodType{
-				Name: "ServeModule",
-				Args: []*revel.MethodArg{ 
-					&revel.MethodArg{Name: "moduleName", Type: reflect.TypeOf((*string)(nil)) },
-					&revel.MethodArg{Name: "prefix", Type: reflect.TypeOf((*string)(nil)) },
-					&revel.MethodArg{Name: "filepath", Type: reflect.TypeOf((*string)(nil)) },
-				},
-				RenderArgNames: map[int][]string{ 
-				},
-			},
-			
-		})
-	
-	revel.RegisterController((*controllers1.TestRunner)(nil),
+	revel.RegisterController((*controllers0.TestRunner)(nil),
 		[]*revel.MethodType{
 			&revel.MethodType{
 				Name: "Index",
@@ -166,8 +142,32 @@ func main() {
 			
 		})
 	
+	revel.RegisterController((*controllers1.Static)(nil),
+		[]*revel.MethodType{
+			&revel.MethodType{
+				Name: "Serve",
+				Args: []*revel.MethodArg{ 
+					&revel.MethodArg{Name: "prefix", Type: reflect.TypeOf((*string)(nil)) },
+					&revel.MethodArg{Name: "filepath", Type: reflect.TypeOf((*string)(nil)) },
+				},
+				RenderArgNames: map[int][]string{ 
+				},
+			},
+			&revel.MethodType{
+				Name: "ServeModule",
+				Args: []*revel.MethodArg{ 
+					&revel.MethodArg{Name: "moduleName", Type: reflect.TypeOf((*string)(nil)) },
+					&revel.MethodArg{Name: "prefix", Type: reflect.TypeOf((*string)(nil)) },
+					&revel.MethodArg{Name: "filepath", Type: reflect.TypeOf((*string)(nil)) },
+				},
+				RenderArgNames: map[int][]string{ 
+				},
+			},
+			
+		})
+	
 	revel.DefaultValidationKeys = map[string]map[int]string{ 
-		"grassfed/app/controllers.App.Add": { 
+		"github.com/grassfed/app/controllers.App.Add": { 
 			26: "id",
 			27: "product",
 			28: "calories",
