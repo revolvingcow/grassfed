@@ -4,70 +4,29 @@ package routes
 import "github.com/revel/revel"
 
 
-type tApp struct {}
-var App tApp
+type tDatabaseController struct {}
+var DatabaseController tDatabaseController
 
 
-func (_ tApp) Index(
+func (_ tDatabaseController) Begin(
 		) string {
 	args := make(map[string]string)
 	
-	return revel.MainRouter.Reverse("App.Index", args).Url
+	return revel.MainRouter.Reverse("DatabaseController.Begin", args).Url
 }
 
-func (_ tApp) About(
+func (_ tDatabaseController) Commit(
 		) string {
 	args := make(map[string]string)
 	
-	return revel.MainRouter.Reverse("App.About", args).Url
+	return revel.MainRouter.Reverse("DatabaseController.Commit", args).Url
 }
 
-func (_ tApp) Me(
+func (_ tDatabaseController) Rollback(
 		) string {
 	args := make(map[string]string)
 	
-	return revel.MainRouter.Reverse("App.Me", args).Url
-}
-
-func (_ tApp) Stats(
-		) string {
-	args := make(map[string]string)
-	
-	return revel.MainRouter.Reverse("App.Stats", args).Url
-}
-
-func (_ tApp) Add(
-		id int,
-		product string,
-		calories int,
-		) string {
-	args := make(map[string]string)
-	
-	revel.Unbind(args, "id", id)
-	revel.Unbind(args, "product", product)
-	revel.Unbind(args, "calories", calories)
-	return revel.MainRouter.Reverse("App.Add", args).Url
-}
-
-func (_ tApp) Goal(
-		) string {
-	args := make(map[string]string)
-	
-	return revel.MainRouter.Reverse("App.Goal", args).Url
-}
-
-func (_ tApp) SetGoal(
-		) string {
-	args := make(map[string]string)
-	
-	return revel.MainRouter.Reverse("App.SetGoal", args).Url
-}
-
-func (_ tApp) Streak(
-		) string {
-	args := make(map[string]string)
-	
-	return revel.MainRouter.Reverse("App.Streak", args).Url
+	return revel.MainRouter.Reverse("DatabaseController.Rollback", args).Url
 }
 
 
@@ -127,6 +86,94 @@ func (_ tStatic) ServeModule(
 	revel.Unbind(args, "prefix", prefix)
 	revel.Unbind(args, "filepath", filepath)
 	return revel.MainRouter.Reverse("Static.ServeModule", args).Url
+}
+
+
+type tApplication struct {}
+var Application tApplication
+
+
+
+type tHome struct {}
+var Home tHome
+
+
+func (_ tHome) Index(
+		) string {
+	args := make(map[string]string)
+	
+	return revel.MainRouter.Reverse("Home.Index", args).Url
+}
+
+func (_ tHome) About(
+		) string {
+	args := make(map[string]string)
+	
+	return revel.MainRouter.Reverse("Home.About", args).Url
+}
+
+
+type tProfile struct {}
+var Profile tProfile
+
+
+func (_ tProfile) Index(
+		) string {
+	args := make(map[string]string)
+	
+	return revel.MainRouter.Reverse("Profile.Index", args).Url
+}
+
+func (_ tProfile) Logon(
+		id string,
+		) string {
+	args := make(map[string]string)
+	
+	revel.Unbind(args, "id", id)
+	return revel.MainRouter.Reverse("Profile.Logon", args).Url
+}
+
+func (_ tProfile) History(
+		) string {
+	args := make(map[string]string)
+	
+	return revel.MainRouter.Reverse("Profile.History", args).Url
+}
+
+func (_ tProfile) Stats(
+		) string {
+	args := make(map[string]string)
+	
+	return revel.MainRouter.Reverse("Profile.Stats", args).Url
+}
+
+func (_ tProfile) Add(
+		product string,
+		calories int64,
+		) string {
+	args := make(map[string]string)
+	
+	revel.Unbind(args, "product", product)
+	revel.Unbind(args, "calories", calories)
+	return revel.MainRouter.Reverse("Profile.Add", args).Url
+}
+
+func (_ tProfile) Delete(
+		id int64,
+		) string {
+	args := make(map[string]string)
+	
+	revel.Unbind(args, "id", id)
+	return revel.MainRouter.Reverse("Profile.Delete", args).Url
+}
+
+func (_ tProfile) Goal(
+		calories int64,
+		) string {
+	args := make(map[string]string)
+	
+	revel.Unbind(args, "calories", calories)
+	return revel.MainRouter.Reverse("Profile.Goal", args).Url
 }
 
 

@@ -4,14 +4,15 @@
 
 module:testrunner
 
-GET     /                                       App.Index
-GET     /about                                  App.About
-GET     /me                                     App.Me
-GET     /me/stats                               App.Stats
-POST    /me/add                                 App.Add
-GET     /me/goal                                App.Goal
-POST    /me/goal                                App.SetGoal
-GET     /me/streak                              App.Streak
+GET     /                                       Home.Index
+GET     /about                                  Home.About
+GET     /me                                     Profile.Index
+POST    /me/logon                               Profile.Logon
+GET     /me/history                             Profile.History
+DELETE  /me/history/:id                         Profile.Delete
+GET     /me/stats                               Profile.Stats
+POST    /me/add                                 Profile.Add
+POST    /me/goal                                Profile.Goal
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

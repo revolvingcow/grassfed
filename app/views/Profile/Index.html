@@ -1,8 +1,37 @@
-<div id="profile" class="row" style="padding: 40px 15px;">
-    <div class="col-md-8">
-        <form action="/me/add" method="post" role="form" class="form-horizontal">
-            <input name="id" type="hidden" value="" />
+{{set . "title" "My Profile"}}
+{{template "header.html" .}}
 
+{{append . "moreScripts" "//plus.google.com/js/client:plusone.js"}}
+{{append . "moreScripts" "/public/js/Chart.min.js"}}
+{{append . "moreScripts" "/public/js/googleplus.js"}}
+{{append . "moreScripts" "/public/js/grassfed.js"}}
+
+<div id="authentication" class="row" style="padding: 50px 15px; display: none;">
+    <div class="col-md-offset-4 col-md-4 text-center">
+        <h1></h1>
+
+        <img src="/public/img/signup.png" />
+
+        <p style="padding-top: 1em;">
+            <span id="signinButton">
+                <span
+                    class="g-signin"
+                    data-callback="onAuthentication"
+                    data-clientid="903785837828-lfsps917vkth7c88em9ieq0l0d0p35kb.apps.googleusercontent.com"
+                    data-cookiepolicy="single_host_origin"
+                    data-requestvisibleactions=""
+                    data-scope="profile">
+                </span>
+            </span>
+        </p>
+    </div>
+</div>
+
+<div id="profile" class="row" style="padding: 50px 15px; display: none;">
+    <h1></h1>
+
+    <div class="col-md-8">
+        <form id="entry" action="/me/add" method="post" role="form" class="form-horizontal">
             <div class="form-group">
                 <label for="product" class="col-sm-2 control-label">Consumed</label>
                 <div class="col-sm-8">
@@ -12,7 +41,7 @@
             <div class="form-group">
                 <label for="calories" class="col-sm-2 control-label">Calories</label>
                 <div class="col-sm-3">
-                    <input name="calories" type="number" value="0" class="form-control text-center" min="0" max="10000" step="100" />
+                    <input name="calories" type="number" value="0" class="form-control text-center" min="0" max="10000" />
                 </div>
             </div>
             <div class="form-group">
@@ -21,6 +50,7 @@
                 </div>
             </div>
         </form>
+        <div id="history"></div>
     </div>
     <div class="col-md-4">
         <h3>Daily Goal</h3>
@@ -30,6 +60,7 @@
         </div>
 
         <form action="/me/goal" method="post" role="form" class="form-horizontal">
+            <input name="current" type="hidden" value="0" />
             <div class="form-group">
                 <div class="col-sm-12 text-center">
                     <input name="calories" type="range" min="1000" max="3000" step="100" value="" class="form-control" />
@@ -43,3 +74,5 @@
 
     </div>
 </div>
+
+{{template "footer.html" .}}

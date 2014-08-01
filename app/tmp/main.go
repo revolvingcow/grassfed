@@ -5,12 +5,13 @@ import (
 	"flag"
 	"reflect"
 	"github.com/revel/revel"
-	_ "github.com/grassfed/app"
-	controllers "github.com/grassfed/app/controllers"
-	tests "github.com/grassfed/tests"
+	_ "github.com/mattn/go-sqlite3"
 	controllers1 "github.com/revel/revel/modules/static/app/controllers"
 	_ "github.com/revel/revel/modules/testrunner/app"
 	controllers0 "github.com/revel/revel/modules/testrunner/app/controllers"
+	_ "github.com/revolvingcow/grassfed/app"
+	controllers "github.com/revolvingcow/grassfed/app/controllers"
+	tests "github.com/revolvingcow/grassfed/tests"
 )
 
 var (
@@ -28,81 +29,27 @@ func main() {
 	revel.Init(*runMode, *importPath, *srcPath)
 	revel.INFO.Println("Running revel server")
 	
-	revel.RegisterController((*controllers.App)(nil),
+	revel.RegisterController((*controllers.DatabaseController)(nil),
 		[]*revel.MethodType{
 			&revel.MethodType{
-				Name: "Index",
+				Name: "Begin",
 				Args: []*revel.MethodArg{ 
 				},
 				RenderArgNames: map[int][]string{ 
-					10: []string{ 
-					},
 				},
 			},
 			&revel.MethodType{
-				Name: "About",
+				Name: "Commit",
 				Args: []*revel.MethodArg{ 
 				},
 				RenderArgNames: map[int][]string{ 
-					14: []string{ 
-					},
 				},
 			},
 			&revel.MethodType{
-				Name: "Me",
+				Name: "Rollback",
 				Args: []*revel.MethodArg{ 
 				},
 				RenderArgNames: map[int][]string{ 
-					18: []string{ 
-					},
-				},
-			},
-			&revel.MethodType{
-				Name: "Stats",
-				Args: []*revel.MethodArg{ 
-				},
-				RenderArgNames: map[int][]string{ 
-					22: []string{ 
-					},
-				},
-			},
-			&revel.MethodType{
-				Name: "Add",
-				Args: []*revel.MethodArg{ 
-					&revel.MethodArg{Name: "id", Type: reflect.TypeOf((*int)(nil)) },
-					&revel.MethodArg{Name: "product", Type: reflect.TypeOf((*string)(nil)) },
-					&revel.MethodArg{Name: "calories", Type: reflect.TypeOf((*int)(nil)) },
-				},
-				RenderArgNames: map[int][]string{ 
-					36: []string{ 
-					},
-				},
-			},
-			&revel.MethodType{
-				Name: "Goal",
-				Args: []*revel.MethodArg{ 
-				},
-				RenderArgNames: map[int][]string{ 
-					40: []string{ 
-					},
-				},
-			},
-			&revel.MethodType{
-				Name: "SetGoal",
-				Args: []*revel.MethodArg{ 
-				},
-				RenderArgNames: map[int][]string{ 
-					44: []string{ 
-					},
-				},
-			},
-			&revel.MethodType{
-				Name: "Streak",
-				Args: []*revel.MethodArg{ 
-				},
-				RenderArgNames: map[int][]string{ 
-					48: []string{ 
-					},
 				},
 			},
 			
@@ -166,11 +113,102 @@ func main() {
 			
 		})
 	
+	revel.RegisterController((*controllers.Application)(nil),
+		[]*revel.MethodType{
+			
+		})
+	
+	revel.RegisterController((*controllers.Home)(nil),
+		[]*revel.MethodType{
+			&revel.MethodType{
+				Name: "Index",
+				Args: []*revel.MethodArg{ 
+				},
+				RenderArgNames: map[int][]string{ 
+					12: []string{ 
+					},
+				},
+			},
+			&revel.MethodType{
+				Name: "About",
+				Args: []*revel.MethodArg{ 
+				},
+				RenderArgNames: map[int][]string{ 
+					16: []string{ 
+					},
+				},
+			},
+			
+		})
+	
+	revel.RegisterController((*controllers.Profile)(nil),
+		[]*revel.MethodType{
+			&revel.MethodType{
+				Name: "Index",
+				Args: []*revel.MethodArg{ 
+				},
+				RenderArgNames: map[int][]string{ 
+					55: []string{ 
+					},
+				},
+			},
+			&revel.MethodType{
+				Name: "Logon",
+				Args: []*revel.MethodArg{ 
+					&revel.MethodArg{Name: "id", Type: reflect.TypeOf((*string)(nil)) },
+				},
+				RenderArgNames: map[int][]string{ 
+				},
+			},
+			&revel.MethodType{
+				Name: "History",
+				Args: []*revel.MethodArg{ 
+				},
+				RenderArgNames: map[int][]string{ 
+				},
+			},
+			&revel.MethodType{
+				Name: "Stats",
+				Args: []*revel.MethodArg{ 
+				},
+				RenderArgNames: map[int][]string{ 
+				},
+			},
+			&revel.MethodType{
+				Name: "Add",
+				Args: []*revel.MethodArg{ 
+					&revel.MethodArg{Name: "product", Type: reflect.TypeOf((*string)(nil)) },
+					&revel.MethodArg{Name: "calories", Type: reflect.TypeOf((*int64)(nil)) },
+				},
+				RenderArgNames: map[int][]string{ 
+				},
+			},
+			&revel.MethodType{
+				Name: "Delete",
+				Args: []*revel.MethodArg{ 
+					&revel.MethodArg{Name: "id", Type: reflect.TypeOf((*int64)(nil)) },
+				},
+				RenderArgNames: map[int][]string{ 
+				},
+			},
+			&revel.MethodType{
+				Name: "Goal",
+				Args: []*revel.MethodArg{ 
+					&revel.MethodArg{Name: "calories", Type: reflect.TypeOf((*int64)(nil)) },
+				},
+				RenderArgNames: map[int][]string{ 
+				},
+			},
+			
+		})
+	
 	revel.DefaultValidationKeys = map[string]map[int]string{ 
-		"github.com/grassfed/app/controllers.App.Add": { 
-			26: "id",
-			27: "product",
-			28: "calories",
+		"github.com/revolvingcow/grassfed/app/controllers.Profile.Add": { 
+			134: "product",
+			135: "calories",
+		},
+		"github.com/revolvingcow/grassfed/app/controllers.Profile.Logon": { 
+			60: "id",
 		},
 	}
 	revel.TestSuites = []interface{}{ 

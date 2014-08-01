@@ -1,10 +1,14 @@
 package app
 
-import "github.com/revel/revel"
+import (
+    "strings"
+    "github.com/revel/revel"
+)
 
 func init() {
 	// Filters is the default set of global filters.
 	revel.Filters = []revel.Filter{
+        ContentTypeFilter,
 		revel.PanicFilter,             // Recover from panics and display an error page instead.
 		revel.RouterFilter,            // Use the routing table to select the right Action
 		revel.FilterConfiguringFilter, // A hook for adding or removing per-Action filters.
@@ -35,4 +39,21 @@ var HeaderFilter = func(c *revel.Controller, fc []revel.Filter) {
 	c.Response.Out.Header().Add("X-Content-Type-Options", "nosniff")
 
 	fc[0](c, fc[1:]) // Execute the next filter stage.
+}
+
+var ContentTypeFilter = func(c *revel.Controller, fc []revel.Filter) {
+    path := c.Request.Request.URL.Path
+    formats := []string{"json", "xml"}
+
+    for _, format := range formats {
+        if strings.HasSuffix(path, "." + format) {
+            trimmed := strings.TrimSuffix(path, "." + format)
+            c.Request.Request.URL.Path = trimmed
+            c.Request.Request.RequestURI = trimmed
+            c.Request.Format = format
+            break
+        }
+    }
+
+    fc[0](c, fc[1:])
 }
