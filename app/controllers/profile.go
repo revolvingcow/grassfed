@@ -106,13 +106,19 @@ func (c Profile) Stats() revel.Result {
         return c.RenderJson(nil)
     }
 
+    now := time.Now().Local()
     history := c.getHistory(account)
     current := int64(0)
 
     if history != nil {
-        for i := 0; i < len(history); i++ {
-            if history[i] != nil {
-                current += history[i].Calories
+        for _, moment := range history {
+            if moment != nil {
+                utcMoment := moment.Date.Local()
+                if utcMoment.Day() == now.Day() && utcMoment.Month() == now.Month() && utcMoment.Year() == now.Year() {
+                    revel.INFO.Println(utcMoment)
+                    revel.INFO.Println(now)
+                    current += moment.Calories
+                }
             }
         }
     }

@@ -118,29 +118,6 @@ func main() {
 			
 		})
 	
-	revel.RegisterController((*controllers.Home)(nil),
-		[]*revel.MethodType{
-			&revel.MethodType{
-				Name: "Index",
-				Args: []*revel.MethodArg{ 
-				},
-				RenderArgNames: map[int][]string{ 
-					12: []string{ 
-					},
-				},
-			},
-			&revel.MethodType{
-				Name: "About",
-				Args: []*revel.MethodArg{ 
-				},
-				RenderArgNames: map[int][]string{ 
-					16: []string{ 
-					},
-				},
-			},
-			
-		})
-	
 	revel.RegisterController((*controllers.Profile)(nil),
 		[]*revel.MethodType{
 			&revel.MethodType{
@@ -202,10 +179,33 @@ func main() {
 			
 		})
 	
+	revel.RegisterController((*controllers.Home)(nil),
+		[]*revel.MethodType{
+			&revel.MethodType{
+				Name: "Index",
+				Args: []*revel.MethodArg{ 
+				},
+				RenderArgNames: map[int][]string{ 
+					12: []string{ 
+					},
+				},
+			},
+			&revel.MethodType{
+				Name: "About",
+				Args: []*revel.MethodArg{ 
+				},
+				RenderArgNames: map[int][]string{ 
+					16: []string{ 
+					},
+				},
+			},
+			
+		})
+	
 	revel.DefaultValidationKeys = map[string]map[int]string{ 
 		"github.com/revolvingcow/grassfed/app/controllers.Profile.Add": { 
-			134: "product",
-			135: "calories",
+			140: "product",
+			141: "calories",
 		},
 		"github.com/revolvingcow/grassfed/app/controllers.Profile.Logon": { 
 			60: "id",

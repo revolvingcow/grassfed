@@ -94,25 +94,6 @@ var Application tApplication
 
 
 
-type tHome struct {}
-var Home tHome
-
-
-func (_ tHome) Index(
-		) string {
-	args := make(map[string]string)
-	
-	return revel.MainRouter.Reverse("Home.Index", args).Url
-}
-
-func (_ tHome) About(
-		) string {
-	args := make(map[string]string)
-	
-	return revel.MainRouter.Reverse("Home.About", args).Url
-}
-
-
 type tProfile struct {}
 var Profile tProfile
 
@@ -174,6 +155,25 @@ func (_ tProfile) Goal(
 	
 	revel.Unbind(args, "calories", calories)
 	return revel.MainRouter.Reverse("Profile.Goal", args).Url
+}
+
+
+type tHome struct {}
+var Home tHome
+
+
+func (_ tHome) Index(
+		) string {
+	args := make(map[string]string)
+	
+	return revel.MainRouter.Reverse("Home.Index", args).Url
+}
+
+func (_ tHome) About(
+		) string {
+	args := make(map[string]string)
+	
+	return revel.MainRouter.Reverse("Home.About", args).Url
 }
 
 
