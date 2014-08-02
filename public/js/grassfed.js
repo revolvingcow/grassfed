@@ -1,18 +1,28 @@
+(function ($) {
+    $.each(['show', 'hide'], function (i, ev) {
+        var el = $.fn[ev];
+        $.fn[ev] = function () {
+            this.trigger(ev);
+            return el.apply(this, arguments);
+        };
+    });
+})(jQuery);
+
 $(function () {
     // Bring the authentication down slowly...
     // this is in case they already have a valid sign-on.
     $('div#authentication').delay(1000).fadeIn();
 
+    var chart = $("#goalChart")[0];
+    var doughnutChart;
+
     function startEngine() {
-        var chart = $("#goalChart")[0];
-        var doughnutChart;
-    
         // Pull the information we need first.
         loadStatistics();
         loadHistory();
     }
 
-    $(document).on('change', 'div#profile', function () {
+    $('div#profile').on('show', function () {
         startEngine();
     });
 
