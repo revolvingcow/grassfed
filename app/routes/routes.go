@@ -176,4 +176,11 @@ func (_ tHome) About(
 	return revel.MainRouter.Reverse("Home.About", args).Url
 }
 
+func (_ tHome) Overview(
+		) string {
+	args := make(map[string]string)
+	
+	return revel.MainRouter.Reverse("Home.Overview", args).Url
+}
+
 

@@ -1,33 +1,21 @@
 {{set . "title" "Home"}}
 {{template "header.html" .}}
 
+{{append . "moreScripts" "/public/js/overview.js"}}
+
 <div class="jumbotron">
     <h1></h1>
     
     <div class="row">
         <div class="col-md-4 text-center">
-            <h3>0</h3>
-            <h3>Users</h3>
+            <h3 class="accounts">0</h3>
+            <h3>Accounts</h3>
         </div>
         <div class="col-md-4 text-center">
-            <h3>0</h3>
-            <h3>Something else</h3>
-        </div>
-        <div class="col-md-4 text-center">
-            <h3>0</h3>
-            <h3>And then...</h3>
+            <h3 class="calories">0</h3>
+            <h3>Calories</h3>
         </div>
     </div>
 </div>
-<!--<span id="signinButton">
-    <span
-        class="g-signin"
-        data-callback="onAuthentication"
-        data-clientid="903785837828-lfsps917vkth7c88em9ieq0l0d0p35kb.apps.googleusercontent.com"
-        data-cookiepolicy="single_host_origin"
-        data-requestvisibleactions=""
-        data-scope="profile">
-    </span>
-</span>-->
 
 {{template "footer.html" .}}

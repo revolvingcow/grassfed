@@ -33,8 +33,10 @@ func init() {
 // should probably also have a filter for CSRF
 // not sure if it can go in the same filter or not
 var HeaderFilter = func(c *revel.Controller, fc []revel.Filter) {
-	// Add some common security headers
-	c.Response.Out.Header().Add("X-Frame-Options", "SAMEORIGIN")
+    // This was commented out so I could mask the origins with DNS
+    //c.Response.Out.Header().Add("X-Frame-Options", "SAMEORIGIN")
+
+    // Add some common security headers
 	c.Response.Out.Header().Add("X-XSS-Protection", "1; mode=block")
 	c.Response.Out.Header().Add("X-Content-Type-Options", "nosniff")
 

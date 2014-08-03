@@ -6,6 +6,7 @@ module:testrunner
 
 GET     /                                       Home.Index
 GET     /about                                  Home.About
+POST    /overview                               Home.Overview
 GET     /me                                     Profile.Index
 POST    /me/logon                               Profile.Logon
 GET     /me/history                             Profile.History

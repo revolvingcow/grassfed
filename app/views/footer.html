@@ -4,6 +4,21 @@
     {{range .moreScripts}}
         <script type="text/javascript" charset="utf-8" src="{{.}}"></script>
     {{end}}
+
+    <script type="text/javascript">
+        $(function () {
+            var loc = window.location.href;
+            var menuItems = $('.nav.navbar-nav').find('li > a');
+
+            for (var i = 0 ; i < menuItems.length; i++) {
+                var href = $(menuItems[i]).attr('href');
+
+                if (loc.indexOf(href, loc.length - href.length) !== -1) {
+                    $(menuItems[i]).parents('li').addClass('active');
+                }
+            }
+        });
+    </script>
   
     {{if eq .RunMode "dev"}}
         {{template "debug.html" .}}

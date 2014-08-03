@@ -20,6 +20,9 @@ $(function () {
         // Pull the information we need first.
         loadStatistics();
         loadHistory();
+
+        // Set focus.
+        $('input[name="products"][type="text"]').focus();
     }
 
     $('div#profile').on('show', function () {
@@ -47,6 +50,9 @@ $(function () {
                     var previousCalories = parseInt($('input[name="current"][type="hidden"]').val());
                     $('input[name="current"][type="hidden"]').val(previousCalories + response.Calories);
                     updateChart();
+
+                    // Reset focus.
+                    $('input[name="products"][type="text"]').focus();
                 }
             });
 
@@ -139,6 +145,8 @@ $(function () {
                     $('input[name="calories"][type="range"]').val(response.Goal);
                     $('span.goal').text(response.Goal);
                     $('input[name="current"][type="hidden"]').val(response.Current);
+                    $('.streak').text(response.Streak);
+                    $('.streak-unit').text('days');
                 }
 
                 updateChart();

@@ -1,6 +1,7 @@
 package controllers
 
 import (
+    "fmt"
     "strings"
     "time"
     "github.com/revel/revel"
@@ -36,6 +37,47 @@ func (c Profile) getHistory(account *models.Account) []*models.History {
     }
 
     return history
+}
+
+func (c Profile) getCaloriesForDate(history []*models.History, date time.Time) (current int64) {
+    current = 0
+
+    if history != nil {
+        for _, moment := range history {
+            if moment != nil {
+                local := moment.Date.Local()
+                if local.Day() == date.Day() && local.Month() == date.Month() && local.Year() == date.Year() {
+                    current += moment.Calories
+                }
+            }
+        }
+    }
+
+    return current
+}
+
+func (c Profile) getStreak(history []*models.History, ceiling int64) (streak int64) {
+    now := time.Now()
+    streak = 0
+
+    if history != nil && len(history) > 0 {
+        interval := 1
+
+        for {
+            s := fmt.Sprintf("-%dh", interval * 24)
+            duration, _ := time.ParseDuration(s)
+            count := c.getCaloriesForDate(history, now.Add(duration))
+
+            if count > 0 && ceiling > count {
+                streak += 1
+                interval += 1
+            } else {
+                break
+            }
+        }
+    }
+
+    return streak
 }
 
 func (c Profile) getMoment(id int64) *models.History {
@@ -106,26 +148,12 @@ func (c Profile) Stats() revel.Result {
         return c.RenderJson(nil)
     }
 
-    now := time.Now().Local()
     history := c.getHistory(account)
-    current := int64(0)
-
-    if history != nil {
-        for _, moment := range history {
-            if moment != nil {
-                utcMoment := moment.Date.Local()
-                if utcMoment.Day() == now.Day() && utcMoment.Month() == now.Month() && utcMoment.Year() == now.Year() {
-                    revel.INFO.Println(utcMoment)
-                    revel.INFO.Println(now)
-                    current += moment.Calories
-                }
-            }
-        }
-    }
 
     response := models.ResponseStatistics {
         Goal: account.Goal,
-        Current: current,
+        Current: c.getCaloriesForDate(history, time.Now()),
+        Streak: c.getStreak(history, account.Goal),
     }
 
     return c.RenderJson(response)
