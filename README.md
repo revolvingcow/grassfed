@@ -13,9 +13,10 @@ It is actually quite simple. Simple click on "My Profile" in the upper right-han
 corner and log in using Google+. Once authenticated a new account will be configured
 for you and now it is time to use it.
 The interface is minimalistic to reduce clutter as well as make it as user friendly
-as possible. To adjust your goal of daily calories just use the sliding bar. To add
-some type of food and its calories do so and click add. Made a mistake? Go ahead and click
-on the "fire" icon to burn your trash.
+as possible.
+ * To adjust your goal of daily calories just use the sliding bar.
+ * To add some type of food and its calories do so and click add.
+ * Made a mistake? Go ahead and click on the "fire" icon to burn your trash.
 
 Where is this heading?
 ----------------------
