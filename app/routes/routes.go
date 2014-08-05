@@ -30,35 +30,6 @@ func (_ tDatabaseController) Rollback(
 }
 
 
-type tStatic struct {}
-var Static tStatic
-
-
-func (_ tStatic) Serve(
-		prefix string,
-		filepath string,
-		) string {
-	args := make(map[string]string)
-	
-	revel.Unbind(args, "prefix", prefix)
-	revel.Unbind(args, "filepath", filepath)
-	return revel.MainRouter.Reverse("Static.Serve", args).Url
-}
-
-func (_ tStatic) ServeModule(
-		moduleName string,
-		prefix string,
-		filepath string,
-		) string {
-	args := make(map[string]string)
-	
-	revel.Unbind(args, "moduleName", moduleName)
-	revel.Unbind(args, "prefix", prefix)
-	revel.Unbind(args, "filepath", filepath)
-	return revel.MainRouter.Reverse("Static.ServeModule", args).Url
-}
-
-
 type tTestRunner struct {}
 var TestRunner tTestRunner
 
@@ -89,9 +60,64 @@ func (_ tTestRunner) List(
 }
 
 
+type tStatic struct {}
+var Static tStatic
+
+
+func (_ tStatic) Serve(
+		prefix string,
+		filepath string,
+		) string {
+	args := make(map[string]string)
+	
+	revel.Unbind(args, "prefix", prefix)
+	revel.Unbind(args, "filepath", filepath)
+	return revel.MainRouter.Reverse("Static.Serve", args).Url
+}
+
+func (_ tStatic) ServeModule(
+		moduleName string,
+		prefix string,
+		filepath string,
+		) string {
+	args := make(map[string]string)
+	
+	revel.Unbind(args, "moduleName", moduleName)
+	revel.Unbind(args, "prefix", prefix)
+	revel.Unbind(args, "filepath", filepath)
+	return revel.MainRouter.Reverse("Static.ServeModule", args).Url
+}
+
+
 type tApplication struct {}
 var Application tApplication
 
+
+
+type tHome struct {}
+var Home tHome
+
+
+func (_ tHome) Index(
+		) string {
+	args := make(map[string]string)
+	
+	return revel.MainRouter.Reverse("Home.Index", args).Url
+}
+
+func (_ tHome) About(
+		) string {
+	args := make(map[string]string)
+	
+	return revel.MainRouter.Reverse("Home.About", args).Url
+}
+
+func (_ tHome) Overview(
+		) string {
+	args := make(map[string]string)
+	
+	return revel.MainRouter.Reverse("Home.Overview", args).Url
+}
 
 
 type tProfile struct {}
@@ -155,32 +181,6 @@ func (_ tProfile) Goal(
 	
 	revel.Unbind(args, "calories", calories)
 	return revel.MainRouter.Reverse("Profile.Goal", args).Url
-}
-
-
-type tHome struct {}
-var Home tHome
-
-
-func (_ tHome) Index(
-		) string {
-	args := make(map[string]string)
-	
-	return revel.MainRouter.Reverse("Home.Index", args).Url
-}
-
-func (_ tHome) About(
-		) string {
-	args := make(map[string]string)
-	
-	return revel.MainRouter.Reverse("Home.About", args).Url
-}
-
-func (_ tHome) Overview(
-		) string {
-	args := make(map[string]string)
-	
-	return revel.MainRouter.Reverse("Home.Overview", args).Url
 }
 
 

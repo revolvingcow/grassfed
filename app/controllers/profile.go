@@ -39,6 +39,57 @@ func (c Profile) getHistory(account *models.Account) []*models.History {
     return history
 }
 
+func (c Profile) getGoal(account *models.Account) (goal int64) {
+    goal = 2000
+
+    if account == nil {
+        return goal
+    }
+
+    results := models.Goal{}
+    err := c.Transaction.SelectOne(
+        &results,
+        `select * from Goal where AccountId = ? order by Date desc limit 1`,
+        account.Id)
+
+    if err != nil {
+        return goal
+    }
+
+    goal = results.Calories
+    return goal
+}
+
+func (c Profile) setGoal(account *models.Account, calories int64) {
+    goals, err := c.Transaction.Select(
+        models.Goal{},
+        `select * from Goal where AccountId = ? order by Date desc limit 1`,
+        account.Id)
+
+    if err != nil {
+        revel.INFO.Println(err)
+        return
+    }
+
+    now := time.Now().Local()
+
+    if len(goals) > 0 {
+        goal := goals[0].(*models.Goal)
+        local := goal.Date.Local()
+
+        if now.Day() == local.Day() && now.Month() == local.Month() && now.Year() == local.Year() {
+            goal.Calories = calories
+            c.Transaction.Update(goal)
+        } else {
+            newGoal := models.Goal{ AccountId: account.Id, Calories: calories, Date: now }
+            c.Transaction.Insert(&newGoal)
+        }
+    } else {
+        newGoal := models.Goal{ AccountId: account.Id, Calories: calories, Date: now }
+        c.Transaction.Insert(&newGoal)
+    }
+}
+
 func (c Profile) getCaloriesForDate(history []*models.History, date time.Time) (current int64) {
     current = 0
 
@@ -94,7 +145,8 @@ func (c Profile) getMoment(id int64) *models.History {
 }
 
 func (c Profile) Index() revel.Result {
-    return c.Render()
+    account := c.Connected()
+    return c.Render(account)
 }
 
 func (c Profile) Logon(id string) revel.Result {
@@ -116,7 +168,6 @@ func (c Profile) Logon(id string) revel.Result {
         revel.INFO.Println("Creating account.")
         account = &models.Account{}
         account.Profile = id
-        account.Goal = 2000
         account.Created = now
         account.LastVisit = now
         c.Transaction.Insert(account)
@@ -148,12 +199,13 @@ func (c Profile) Stats() revel.Result {
         return c.RenderJson(nil)
     }
 
+    goal := c.getGoal(account)
     history := c.getHistory(account)
 
     response := models.ResponseStatistics {
-        Goal: account.Goal,
+        Goal: goal,
         Current: c.getCaloriesForDate(history, time.Now()),
-        Streak: c.getStreak(history, account.Goal),
+        Streak: c.getStreak(history, goal),
     }
 
     return c.RenderJson(response)
@@ -206,8 +258,6 @@ func (c Profile) Goal(calories int64) revel.Result {
         return c.RenderJson(nil)
     }
 
-    account.Goal = calories
-    c.Transaction.Update(account)
-
+    c.setGoal(account, calories)
     return c.RenderJson(true)
 }

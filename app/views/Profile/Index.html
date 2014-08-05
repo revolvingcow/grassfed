@@ -6,7 +6,8 @@
 {{append . "moreScripts" "/public/js/googleplus.js"}}
 {{append . "moreScripts" "/public/js/grassfed.js"}}
 
-<div id="authentication" class="row" style="padding: 50px 15px; display: none;">
+{{if not .account}}
+<div id="authentication" class="row" style="padding: 50px 15px;">
     <div class="col-md-offset-4 col-md-4 text-center">
         <h1></h1>
 
@@ -26,8 +27,13 @@
         </p>
     </div>
 </div>
+{{end}}
 
+{{if not .account}}
 <div id="profile" class="row" style="padding: 50px 15px; display: none;">
+{{else}}
+<div id="profile" class="row" style="padding: 50px 15px;">
+{{end}}
     <h1></h1>
 
     <div class="col-md-8">

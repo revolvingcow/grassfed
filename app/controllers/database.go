@@ -19,9 +19,11 @@ func Initialize() {
 
     DbMap.AddTable(models.Account{}).SetKeys(true, "Id")
     DbMap.AddTable(models.History{}).SetKeys(true, "Id")
+    DbMap.AddTable(models.Goal{}).SetKeys(true, "Id")
+    DbMap.AddTable(models.Weight{}).SetKeys(true, "Id")
 
     DbMap.TraceOn("[db]", revel.INFO)
-    DbMap.CreateTables()
+    DbMap.CreateTablesIfNotExists()
 }
 
 type DatabaseController struct {

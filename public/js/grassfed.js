@@ -9,10 +9,6 @@
 })(jQuery);
 
 $(function () {
-    // Bring the authentication down slowly...
-    // this is in case they already have a valid sign-on.
-    $('div#authentication').delay(1000).fadeIn();
-
     var chart = $("#goalChart")[0];
     var doughnutChart;
 
@@ -25,9 +21,15 @@ $(function () {
         $('input[name="products"][type="text"]').focus();
     }
 
-    $('div#profile').on('show', function () {
+    // Check to see if the profile is not hidden. If it is not then start your engines!
+    if (!$('div#profile').is(':hidden')) {
         startEngine();
-    });
+    }
+    else {
+        $('div#profile').on('show', function () {
+            startEngine();
+        });
+    }
 
     $('form#entry').on('submit', function (e) {
         e.preventDefault();
