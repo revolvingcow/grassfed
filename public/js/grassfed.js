@@ -132,7 +132,7 @@ $(function () {
         var panelBody;
 
         if (panelTitle.length > 0) {
-            panelBody = $(panelTitle).parents('div.panel').find('div.panel-body');
+            panelBody = $(panelTitle).parents('div.panel').find('.table');
         }
         else {
             $('div#history').prepend(
@@ -150,7 +150,10 @@ $(function () {
                 .append(
                     '<td>' + product + '</td>'
                     + '<td class="text-right" style="width: 4em;"><span class="calories">' + calories + '</span></td>'
-                    + '<td class="text-center" style="width: 6em;"><button class="btn btn-danger delete-history"><span class="glyphicon glyphicon-fire"></span></button></td>'));
+                    + '<td class="text-center" style="width: 6em;"><button class="btn btn-danger delete-history" style="display: none;"><span class="glyphicon glyphicon-fire"></span></button></td>'));
+
+        $('.panel.panel-default > .panel-collapse').addClass('collapse').find('.delete-history').hide();
+        $('.panel.panel-default:first > .panel-collapse').addClass('in').find('.delete-history').show();
     }
 
     function getDailyCalories() {
@@ -219,7 +222,7 @@ $(function () {
                                 .append(
                                     '<td>' + response[i].Product + '</td>'
                                     + '<td class="text-right" style="width: 4em;"><span class="calories">' + response[i].Calories + '</span></td>'
-                                    + '<td class="text-center" style="width: 6em;"><button class="btn btn-danger delete-history"><span class="glyphicon glyphicon-fire"></span></button></td>');
+                                    + '<td class="text-center" style="width: 6em;"><button class="btn btn-danger delete-history" style="display: none;"><span class="glyphicon glyphicon-fire"></span></button></td>');
 
                             if (!lastDate || lastDate != momentDate) {
                                 lastDate = momentDate;
@@ -247,8 +250,8 @@ $(function () {
                         $(history).append(panel);
                     }
 
-                    $('.panel.panel-default > .panel-collapse').addClass('collapse');
-                    $('.panel.panel-default:first > .panel-collapse').addClass('in');
+                    $('.panel.panel-default > .panel-collapse').addClass('collapse').find('.delete-history').hide();
+                    $('.panel.panel-default:first > .panel-collapse').addClass('in').find('.delete-history').show();
                 }
             });
     }
