@@ -83,7 +83,7 @@ $(function () {
 
     $(document).on('click', 'button.delete-history', function (e) {
         e.preventDefault();
-        var moment = parseInt($(this).parents('div.media').attr('data-moment'));
+        var moment = parseInt($(this).parents('tr').attr('data-moment'));
 
         $.ajax({
             url: '/me/history/' + moment,
@@ -91,7 +91,7 @@ $(function () {
         })
         .done(function (response) {
             if (response) {
-                var media = $('div.media[data-moment="' + moment + '"]');
+                var media = $('tr[data-moment="' + moment + '"]');
                 var panel = $(media).parents('div.panel');
                 var previousCalories = parseInt($('input[name="current"][type="hidden"]').val());
                 var calories = parseInt($(media).find('span.calories').text());
@@ -105,7 +105,7 @@ $(function () {
                 loadTrends();
 
                 // Check if there are any more media elements in the panel. If not remove the panel.
-                if ($(panel).find('div.media').length == 0) {
+                if ($(panel).find('tr').length == 0) {
                     $(panel).remove();
                 }
             }
@@ -137,17 +137,20 @@ $(function () {
         else {
             $('div#history').prepend(
                 $('<div class="panel panel-default">')
-                    .append('<div class="panel-heading"><h3 class="panel-title">' + momentDate + '</h3></div>')
-                    .append('<div class="panel-body">'));
+                    .append('<div class="panel-heading"><h3 class="panel-title"><a data-toggle="collapse" data-parent="#history" href="#' + momentDate.replace(/\s+/g, '-') + '">' + momentDate + '</a></h3></div>')
+                    .append($('<div id="' + momentDate.replace(/\s+/g, '-') + '" class="panel-collapse">')
+                        .append($('<div class="panel-body">')
+                            .append('<table class="class">'))));
 
             panelBody = $('h3.panel-title:contains("' + momentDate + '")').parents('div.panel').find('div.panel-body');
         }
 
         $(panelBody).prepend(
-            $('<div class="media" data-moment="' + id + '">')
-                .append('<div class="media-object pull-right"><button class="btn btn-danger delete-history"><span class="glyphicon glyphicon-fire"></span></button></div>')
-                .append('<div class="media-body">')
-                .append('<h4 class="media-heading">' + product + ' (<span class="calories">' + calories + '</span> calories)</h4>'));
+            $('<tr data-moment="' + id + '">')
+                .append(
+                    '<td>' + product + '</td>'
+                    + '<td class="text-right" style="width: 4em;"><span class="calories">' + calories + '</span></td>'
+                    + '<td class="text-center" style="width: 6em;"><button class="btn btn-danger delete-history"><span class="glyphicon glyphicon-fire"></span></button></td>'));
     }
 
     function getDailyCalories() {
@@ -212,24 +215,27 @@ $(function () {
                     for (var i = 0; i < response.length; i++) {
                         if (response[i]) {
                             var momentDate = new Date(response[i].Date).toDateString();
-                            var moment = $('<div class="media" data-moment="' + response[i].Id + '">')
-                                .append('<div class="media-object pull-right"><button class="btn btn-danger delete-history"><span class="glyphicon glyphicon-fire"></span></button></div>')
-                                .append('<div class="media-body">')
-                                .append('<h4 class="media-heading">' + response[i].Product + ' (<span class="calories">' + response[i].Calories + '</span> calories)</h4>');
+                            var moment = $('<tr data-moment="' + response[i].Id + '">')
+                                .append(
+                                    '<td>' + response[i].Product + '</td>'
+                                    + '<td class="text-right" style="width: 4em;"><span class="calories">' + response[i].Calories + '</span></td>'
+                                    + '<td class="text-center" style="width: 6em;"><button class="btn btn-danger delete-history"><span class="glyphicon glyphicon-fire"></span></button></td>');
 
                             if (!lastDate || lastDate != momentDate) {
                                 lastDate = momentDate;
     
                                 if (panel) {
-                                    $(panel).find('div.panel-body').append(moments);
+                                    $(panel).find('.table').append(moments);
                                     $(history).append(panel);
                                     moments = [];
                                     panel = null;
                                 }
     
                                 panel = $('<div class="panel panel-default">')
-                                    .append('<div class="panel-heading"><h3 class="panel-title">' + lastDate + '</h3></div>')
-                                    .append('<div class="panel-body">');
+                                    .append('<div class="panel-heading"><h3 class="panel-title"><a data-toggle="collapse" data-parent="#history" href="#' + lastDate.replace(/\s+/g, '-') + '">' + lastDate + '</a></h3></div>')
+                                    .append($('<div id="' + lastDate.replace(/\s+/g, '-') + '" class="panel-collapse">')
+                                        .append($('<div class="panel-body">')
+                                            .append('<table class="table">')));
                             }
                                 
                             moments.push(moment);
@@ -240,6 +246,9 @@ $(function () {
                         $(panel).find('div.panel-body').append(moments);
                         $(history).append(panel);
                     }
+
+                    $('.panel.panel-default > .panel-collapse').addClass('collapse');
+                    $('.panel.panel-default:first > .panel-collapse').addClass('in');
                 }
             });
     }
