@@ -1,14 +1,14 @@
 package app
 
 import (
-    "strings"
-    "github.com/revel/revel"
+	"github.com/revel/revel"
+	"strings"
 )
 
 func init() {
 	// Filters is the default set of global filters.
 	revel.Filters = []revel.Filter{
-        ContentTypeFilter,
+		ContentTypeFilter,
 		revel.PanicFilter,             // Recover from panics and display an error page instead.
 		revel.RouterFilter,            // Use the routing table to select the right Action
 		revel.FilterConfiguringFilter, // A hook for adding or removing per-Action filters.
@@ -33,10 +33,10 @@ func init() {
 // should probably also have a filter for CSRF
 // not sure if it can go in the same filter or not
 var HeaderFilter = func(c *revel.Controller, fc []revel.Filter) {
-    // This was commented out so I could mask the origins with DNS
-    //c.Response.Out.Header().Add("X-Frame-Options", "SAMEORIGIN")
+	// This was commented out so I could mask the origins with DNS
+	//c.Response.Out.Header().Add("X-Frame-Options", "SAMEORIGIN")
 
-    // Add some common security headers
+	// Add some common security headers
 	c.Response.Out.Header().Add("X-XSS-Protection", "1; mode=block")
 	c.Response.Out.Header().Add("X-Content-Type-Options", "nosniff")
 
@@ -44,18 +44,18 @@ var HeaderFilter = func(c *revel.Controller, fc []revel.Filter) {
 }
 
 var ContentTypeFilter = func(c *revel.Controller, fc []revel.Filter) {
-    path := c.Request.Request.URL.Path
-    formats := []string{"json", "xml"}
+	path := c.Request.Request.URL.Path
+	formats := []string{"json", "xml"}
 
-    for _, format := range formats {
-        if strings.HasSuffix(path, "." + format) {
-            trimmed := strings.TrimSuffix(path, "." + format)
-            c.Request.Request.URL.Path = trimmed
-            c.Request.Request.RequestURI = trimmed
-            c.Request.Format = format
-            break
-        }
-    }
+	for _, format := range formats {
+		if strings.HasSuffix(path, "."+format) {
+			trimmed := strings.TrimSuffix(path, "."+format)
+			c.Request.Request.URL.Path = trimmed
+			c.Request.Request.RequestURI = trimmed
+			c.Request.Format = format
+			break
+		}
+	}
 
-    fc[0](c, fc[1:])
+	fc[0](c, fc[1:])
 }

@@ -154,6 +154,13 @@ func (_ tProfile) Stats(
 	return revel.MainRouter.Reverse("Profile.Stats", args).Url
 }
 
+func (_ tProfile) Trends(
+		) string {
+	args := make(map[string]string)
+	
+	return revel.MainRouter.Reverse("Profile.Trends", args).Url
+}
+
 func (_ tProfile) Add(
 		product string,
 		calories int64,
@@ -181,6 +188,15 @@ func (_ tProfile) Goal(
 	
 	revel.Unbind(args, "calories", calories)
 	return revel.MainRouter.Reverse("Profile.Goal", args).Url
+}
+
+func (_ tProfile) Weight(
+		weight float64,
+		) string {
+	args := make(map[string]string)
+	
+	revel.Unbind(args, "weight", weight)
+	return revel.MainRouter.Reverse("Profile.Weight", args).Url
 }
 
 

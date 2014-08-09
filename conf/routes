@@ -12,8 +12,10 @@ POST    /me/logon                               Profile.Logon
 GET     /me/history                             Profile.History
 DELETE  /me/history/:id                         Profile.Delete
 GET     /me/stats                               Profile.Stats
+GET     /me/trends                              Profile.Trends
 POST    /me/add                                 Profile.Add
 POST    /me/goal                                Profile.Goal
+POST    /me/weight                              Profile.Weight
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

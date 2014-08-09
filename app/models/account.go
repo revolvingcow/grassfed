@@ -1,12 +1,12 @@
 package models
 
 import (
-    "time"
+	"time"
 )
 
 type Account struct {
-    Id              int64
-    Profile         string
-    Created         time.Time
-    LastVisit       time.Time
+	Id        int64
+	Profile   string
+	Created   time.Time
+	LastVisit time.Time
 }

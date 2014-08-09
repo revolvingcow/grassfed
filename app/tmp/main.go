@@ -155,7 +155,7 @@ func main() {
 				Args: []*revel.MethodArg{ 
 				},
 				RenderArgNames: map[int][]string{ 
-					149: []string{ 
+					273: []string{ 
 						"account",
 					},
 				},
@@ -177,6 +177,13 @@ func main() {
 			},
 			&revel.MethodType{
 				Name: "Stats",
+				Args: []*revel.MethodArg{ 
+				},
+				RenderArgNames: map[int][]string{ 
+				},
+			},
+			&revel.MethodType{
+				Name: "Trends",
 				Args: []*revel.MethodArg{ 
 				},
 				RenderArgNames: map[int][]string{ 
@@ -207,16 +214,24 @@ func main() {
 				RenderArgNames: map[int][]string{ 
 				},
 			},
+			&revel.MethodType{
+				Name: "Weight",
+				Args: []*revel.MethodArg{ 
+					&revel.MethodArg{Name: "weight", Type: reflect.TypeOf((*float64)(nil)) },
+				},
+				RenderArgNames: map[int][]string{ 
+				},
+			},
 			
 		})
 	
 	revel.DefaultValidationKeys = map[string]map[int]string{ 
 		"github.com/revolvingcow/grassfed/app/controllers.Profile.Add": { 
-			220: "product",
-			221: "calories",
+			409: "product",
+			410: "calories",
 		},
 		"github.com/revolvingcow/grassfed/app/controllers.Profile.Logon": { 
-			154: "id",
+			278: "id",
 		},
 	}
 	revel.TestSuites = []interface{}{ 

@@ -75,6 +75,27 @@
             </div>
         </form>
 
+        <h3>Trending</h3>
+        <div class="text-center">
+            <canvas id="trendsChart" width="400" height="250"></canvas>
+        </div>
+
+        <form id="recordWeight" action="/me/weight" method="post" role="form" class="form-horizontal">
+            <div class="form-group">
+                <div class="col-xs-offset-2 col-xs-3">
+                    <label for="weight" class="form-label">Weight</label>
+                </div>
+                <div class="col-xs-5">
+                    <input name="weight" type="number" min="0" max="1000" step="any" value="" class="col-xs-8 form-control" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-xs-offset-6 col-xs-4">
+                    <input type="submit" value="Record" class="form-control btn btn-primary" />
+                </div>
+            </div>
+        </form>
+
         <h3>Streak</h3>
         <h3 class="streak text-center">0</h3>
         <h3 class="streak-units text-center">days</h3>
