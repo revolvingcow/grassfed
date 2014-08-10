@@ -32,3 +32,6 @@ More information
 Feel free to contact us from our website at [http://www.revolvingcow.com](http://www.revolvingcow.com) or
 our [Google+ page](https://plus.google.com/+Revolvingcow).
 
+To report any issues or requests for new features check our project planning at
+[https://trello.com/b/oEdKPYyW/grassfed](https://trello.com/b/oEdKPYyW/grassfed).
+
