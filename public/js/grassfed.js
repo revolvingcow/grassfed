@@ -140,9 +140,9 @@ $(function () {
                     .append('<div class="panel-heading"><h3 class="panel-title"><a data-toggle="collapse" data-parent="#history" href="#' + momentDate.replace(/\s+/g, '-') + '">' + momentDate + '</a></h3></div>')
                     .append($('<div id="' + momentDate.replace(/\s+/g, '-') + '" class="panel-collapse">')
                         .append($('<div class="panel-body">')
-                            .append('<table class="class">'))));
+                            .append('<table class="table">'))));
 
-            panelBody = $('h3.panel-title:contains("' + momentDate + '")').parents('div.panel').find('div.panel-body');
+            panelBody = $('h3.panel-title:contains("' + momentDate + '")').parents('div.panel').find('.table');
         }
 
         $(panelBody).prepend(
@@ -246,7 +246,7 @@ $(function () {
                     }
 
                     if (panel) {
-                        $(panel).find('div.panel-body').append(moments);
+                        $(panel).find('.table').append(moments);
                         $(history).append(panel);
                     }
 
