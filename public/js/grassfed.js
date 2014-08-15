@@ -108,6 +108,8 @@ $(function () {
                 if ($(panel).find('tr').length == 0) {
                     $(panel).remove();
                 }
+
+                updatePanelTotals();
             }
         });
     });
@@ -137,7 +139,7 @@ $(function () {
         else {
             $('div#history').prepend(
                 $('<div class="panel panel-default">')
-                    .append('<div class="panel-heading"><h3 class="panel-title"><a data-toggle="collapse" data-parent="#history" href="#' + momentDate.replace(/\s+/g, '-') + '">' + momentDate + '</a></h3></div>')
+                    .append('<div class="panel-heading"><h3 class="panel-title"><a data-toggle="collapse" data-parent="#history" href="#' + momentDate.replace(/\s+/g, '-') + '">' + momentDate + '</a><span class="pull-right badge">0</span></h3></div>')
                     .append($('<div id="' + momentDate.replace(/\s+/g, '-') + '" class="panel-collapse">')
                         .append($('<div class="panel-body">')
                             .append('<table class="table">'))));
@@ -154,6 +156,7 @@ $(function () {
 
         $('.panel.panel-default > .panel-collapse').addClass('collapse').find('.delete-history').hide();
         $('.panel.panel-default:first > .panel-collapse').addClass('in').find('.delete-history').show();
+        updatePanelTotals();
     }
 
     function getDailyCalories() {
@@ -235,7 +238,7 @@ $(function () {
                                 }
     
                                 panel = $('<div class="panel panel-default">')
-                                    .append('<div class="panel-heading"><h3 class="panel-title"><a data-toggle="collapse" data-parent="#history" href="#' + lastDate.replace(/\s+/g, '-') + '">' + lastDate + '</a></h3></div>')
+                                    .append('<div class="panel-heading"><h3 class="panel-title"><a data-toggle="collapse" data-parent="#history" href="#' + lastDate.replace(/\s+/g, '-') + '">' + lastDate + '</a><span class="pull-right badge">0</span></h3></div>')
                                     .append($('<div id="' + lastDate.replace(/\s+/g, '-') + '" class="panel-collapse">')
                                         .append($('<div class="panel-body">')
                                             .append('<table class="table">')));
@@ -252,6 +255,7 @@ $(function () {
 
                     $('.panel.panel-default > .panel-collapse').addClass('collapse').find('.delete-history').hide();
                     $('.panel.panel-default:first > .panel-collapse').addClass('in').find('.delete-history').show();
+                    updatePanelTotals();
                 }
             });
     }
@@ -346,6 +350,21 @@ $(function () {
             doughnutChart.segments[1].highlight = goalColor;
 
             doughnutChart.update();
+        }
+    }
+
+    function updatePanelTotals() {
+        var panels = $('.panel');
+        for (var i = 0; i < panels.length; i++) {
+            var panel = panels[i];
+            var total = 0;
+
+            var calories = $(panel).find('span.calories');
+            for (var j = 0; j < calories.length; j++) {
+                total += parseInt($(calories[j]).text());
+            }
+
+            $(panel).find('span.badge').text(total);
         }
     }
 });
